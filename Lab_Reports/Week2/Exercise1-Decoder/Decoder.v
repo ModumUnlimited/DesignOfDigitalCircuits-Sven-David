@@ -1,9 +1,9 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: ETHZ
-// Engineer: svenp & zdavid
+// Company: 
+// Engineer: 
 // 
-// Create Date: 15.03.2019 11:32:16
+// Create Date: 03/15/2019 10:26:40 PM
 // Design Name: 
 // Module Name: Decoder
 // Project Name: 
@@ -20,9 +20,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Decoder(input [1:0] a, output [3:0] o);
-     assign o[0] = a[0] & a[1];
-     assign o[1] = (~a[0]) & a[1];
-     assign o[2] = a[0] & (~a[1]);
-     assign o[3] = (~a[0]) & (~a[1]);
+
+// design manually verified.
+
+module Decoder(input [1:0] in, output [3:0] out);
+    assign out[0] = ~in[0] & ~in[1];
+    assign out[1] = in[0] & ~in[1];
+    assign out[2] = ~in[0] & in[1];
+    assign out[3] = in[0] & in[1];
 endmodule
