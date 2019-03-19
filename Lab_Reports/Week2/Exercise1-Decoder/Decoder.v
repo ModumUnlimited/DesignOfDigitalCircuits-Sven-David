@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: ETHZ
+// Engineer: svenp & zdavid
 // 
 // Create Date: 03/15/2019 10:26:40 PM
 // Design Name: 
