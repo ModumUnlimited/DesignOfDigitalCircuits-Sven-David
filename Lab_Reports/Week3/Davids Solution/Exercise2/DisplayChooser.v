@@ -23,9 +23,9 @@
 module DisplayChooser(input [1:0] chooser,output reg [3:0]AN);
     always @(*)
         case (chooser) 
-            2'b00: AN = 4'b0111;
-            2'b01: AN = 4'b1011;
-            2'b10: AN = 4'b1101;
-            2'b11: AN = 4'b1110;
+            2'b00: AN = 4'b1110;
+            2'b01: AN = 4'b1101;
+            2'b10: AN = 4'b1011;
+            2'b11: AN = 4'b0111;
         endcase
 endmodule
