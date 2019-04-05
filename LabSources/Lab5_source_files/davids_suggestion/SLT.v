@@ -26,6 +26,6 @@ module SLT(
     output [31:0] result
     );
     
-    assign result = (A < B) ? 32'b11111111111111111111111111111111 : 32'b0;
+    assign result = (A < B) ? 32'b1 : 32'b0;
     
 endmodule
