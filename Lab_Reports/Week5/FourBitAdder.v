@@ -3,27 +3,6 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03/22/2019 11:16:28 AM
-// Design Name: 
-// Module Name: FourBitAdder
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
 // Create Date: 15.03.2019 10:48:06
 // Design Name: 
 // Module Name: FourBitAdder
@@ -41,10 +20,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module FourBitAdder(input [3:0]a, input [3:0]b, input carryOne, output [4:0]s);
+module FourBitAdder(input [3:0]a, input [3:0]b, output [4:0]s);
 
     //Internal
-    //supply0 carryOne;
+    supply0 carryOne;
     wire carryTwo;
     wire carryThree;
     wire carryFour;
