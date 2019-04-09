@@ -25,10 +25,6 @@ module PMWLed(input clk, input[2:0] intensity, output led);
 // internal variable for bookkeeping
 reg[2:0] ledController;
 
-//always @(posedge clk) cnt <= cnt + 1'b1;  // free-running counter
-
-//assign PWM_out = (PWM_in > cnt);  // comparator
-
 // we just add the intensity to the internal variable. If we overflow, we just start at 0 again
 always @(posedge clk)
     ledController <= ledController + intensity;

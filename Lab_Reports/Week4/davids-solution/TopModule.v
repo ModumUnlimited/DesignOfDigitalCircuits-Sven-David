@@ -1,23 +1,5 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 03/30/2019 07:30:06 AM
-// Design Name: 
-// Module Name: TopModule
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+
 
 
 module TopModule(
@@ -26,7 +8,13 @@ module TopModule(
     input left,
     input right,
     output reg [5:0] leds,
-    output reg [5:0] leds2);
+    //output reg [5:0] leds2,
+    output reg LC,
+    output reg LB,
+    output reg LA,
+    output reg RC,
+    output reg RB,
+    output reg RA);
     
 
 
@@ -36,7 +24,7 @@ wire clock;
 clk_div cg(clk, reset, clock);
 
 
-//zero state
+// all the different states we have
 parameter STATE0 = 3'b000;
 parameter STATE1 = 3'b001;
 parameter STATE2 = 3'b010;
@@ -103,10 +91,10 @@ always @(posedge reset or posedge clock)
 
 
 
-// determine next state: -> we always do this after we change the currentState
+// determine next state:
 always @(*)
     begin
-        nextState = STATE0; // this statements stops the verilog synthesizer of placing nextstate in a latch.
+        nextState = STATE0; // this statements stops the verilog synthesizer of placing nextstate in a latch. (seen in UC Berkeley Verilog Tutorial)
         case (currentState)
 
             STATE0:
@@ -150,7 +138,7 @@ always @(*)
     end
 
 
-/*
+/* old output logic
 // output logic
 always @(*)
     begin
@@ -179,6 +167,7 @@ always @(*)
 
 
 
+// here we define our output logic
 
 wire l0;
 wire l1;
@@ -197,12 +186,12 @@ PMWLed pw5 (.clk(clk), .led(l5), .intensity(led5));
 
 always @(clk)
     begin
-        leds2[5] = l0;
-        leds2[4] = l1;
-        leds2[3] = l2;
-        leds2[2] = l3;
-        leds2[1] = l4;
-        leds2[0] = l5;
+        RC = l0;
+        RB = l1;
+        RA = l2;
+        LA = l3;
+        LB = l4;
+        LC = l5;
     end
 
 
@@ -317,7 +306,7 @@ always @(*)
 
 
 
-/*
+/* old logic: DO NOT USE
 
 
 always @(*)
