@@ -1,3 +1,5 @@
+This lab has been submitted by Sven Pfiffner and David Zollikofer
+
 We have multiple files in this folder:
 
 - finalresult.mp4 : A video demonstrating how it looks like on our FPGA.
