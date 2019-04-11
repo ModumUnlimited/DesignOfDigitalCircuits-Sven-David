@@ -40,12 +40,12 @@ module ALU_test;
    wire			exp_zero;
 
    // Vector and Error counts
-   reg [10:0]	vec_cnt, err_cnt;
+   reg [31:0]	vec_cnt, err_cnt;
 
    // TO DO:
    // Define an array called 'testvec' that is wide enough to hold the inputs:
    //   aluop, a, b 
-   // 96 bit wide and 12 tests -> 13th is the end of file
+   // 100 3*32 +4  bit wide and 12 tests -> 13th is the end of file
    reg[99:0] testvec[0:12];
 
    // and the expected output
@@ -70,6 +70,8 @@ module ALU_test;
 		// Read the content of the file testvectors_hex.txt into the 
 		// array testvec. The file contains values in hexadecimal format
         $readmemh("C:\\Users\\David\\Desktop\\testvectors_hex.txt",testvec);
+            //$writememh("C:\\Users\\David\\Desktop\\testvectors_hex_out.txt", testvec);
+
 		err_cnt=0; // number of errors
 		vec_cnt=0; // number of vectors
 	end
@@ -88,6 +90,7 @@ module ALU_test;
 
 		// Assign the signals from the testvec array
 		{aluop,a,b,exp_result}= testvec[vec_cnt]; 
+		//$display("%h %h %h %h",aluop,a,b,exp_result);							// %b displays binary
 
 		// Wait another 60ns after which we will be at 80ns
 		#60; 
@@ -103,6 +106,7 @@ module ALU_test;
 		end
 
 		vec_cnt = vec_cnt + 1;																	// next vector
+		//$display(" currently at %d with op %h ",vec_cnt, aluop);							// %b displays binary
 	
 		// We use === so that we can also test for X
 		if ((testvec[vec_cnt][99:96] === 4'bxxxx))
@@ -120,7 +124,7 @@ module ALU_test;
 
    // TO DO:
    
-   bad_ALU deviceUnderTest(a, b, aluop, result, zero);
+   Alu deviceUnderTest(a, b, aluop, result, zero);
    // Instantiate the Unit Under Test (UUT)
    
 endmodule
