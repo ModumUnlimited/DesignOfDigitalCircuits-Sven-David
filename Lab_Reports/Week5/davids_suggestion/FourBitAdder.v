@@ -20,10 +20,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module FourBitAdder(input [3:0]a, input [3:0]b, output [4:0]s);
+module FourBitAdder(input [3:0]a, input [3:0]b, input carryOne, output [4:0]s);
 
     //Internal
-    supply0 carryOne;
     wire carryTwo;
     wire carryThree;
     wire carryFour;
