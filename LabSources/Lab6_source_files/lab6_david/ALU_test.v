@@ -94,6 +94,8 @@ module ALU_test;
 
 		// Wait another 60ns after which we will be at 80ns
 		#60; 
+	   
+	   $display("Currently at %d",vec_cnt );	// %h displays hex
 
 		// Check if output is not what we expect to see
 		if ((result !== exp_result) | (zero !== exp_zero))
@@ -124,7 +126,7 @@ module ALU_test;
 
    // TO DO:
    
-   Alu deviceUnderTest(a, b, aluop, result, zero);
+   bad_ALU deviceUnderTest(a, b, aluop, result, zero);
    // Instantiate the Unit Under Test (UUT)
    
 endmodule

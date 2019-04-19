@@ -35,30 +35,32 @@ module bad_ALU(
    wire 				Ss2; 
    wire 				ss3;
    
-	assign {ss0,ss1,Ss2,ss3} = aluop;	// make assigns
+	assign {ss0,ss1,ss2,ss3} = aluop;	// make assigns
 
    // define the logicfunction 
 	always @ ( * )
 	begin
-		if (ss1 == 0)
-			if (ss0 == 0) 
-				logicsel = a & b;
+		if (ss2 == 1)
+			if (ss3 == 0) 
+				logicsel = a ^ b;
 			else
-				logicsel = a | b;
+				logicsel =  ~(a | b);
 	else
-		if (ss0 == 1)
-			logicsel= ~(a | b);
+		if (ss3 == 1)
+			logicsel = a | b;
 		else 
-			logicsel = a ^ b;
+			logicsel = a & b;
      end   
 
-	always @ ( aluop , a, b )
+	always @ ( *)
 		if (aluop == 4'b1010)
 		begin
-			diff <= a - b;			// calculate the difference
-			slt <= 0;				// default value
-			if (diff[31] == 1) 
-				slt <= 1;			// if MSB is 1 slt is 1 
+		    diff = (a-b);
+		    slt = 32'b0;
+		    //$display("%b", diff);
+		    if(diff[31] == 1'b1)
+		          slt = 32'b1;
+            //slt = ((a < b));
 		end		
 
 	always @ ( * )
@@ -66,7 +68,7 @@ module bad_ALU(
 		case (aluop)
 			4'b0000 : alu_val = a + b;
 			4'b0010 : alu_val = a - b;
-			4'b1011 : alu_val = slt;
+			4'b1010 : alu_val = slt;
 			default : alu_val = logicsel;
 		endcase		 
 	end
