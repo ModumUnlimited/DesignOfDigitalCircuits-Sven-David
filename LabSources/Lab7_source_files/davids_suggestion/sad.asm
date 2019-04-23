@@ -1,8 +1,7 @@
 #
 # Sum of Absolute Differences Algorithm
 #
-# Authors: 
-#	X Y, Z Q 
+# Authors: Sven Pfiffner and David Zollikofer
 #
 #
 
@@ -106,7 +105,6 @@ loop:
 	
 end_loop:
 
-	#TODO5: Call recursive_sum and store the result in $t2
 	#Calculate the base address of sad_array (first argument
 	#of the function call)and store in the corresponding register   
 	
@@ -119,7 +117,6 @@ end_loop:
 	# Call to funtion
 	
 	jal recursive_sum
-	  
 	
 	#Store the returned value in $t2
 	
@@ -128,48 +125,60 @@ end_loop:
 	j end
 
 
-
-# take them out for later!
-
+# a0 is the pixel from the first image
+# a1 is the pixel from the second image
+# v0 will be the absolute difference between the two
 abs_diff:
-	sub $t1, $a0, $a1
-	sra $t2,$t1,31   
-	xor $t1,$t1,$t2   
-	sub $v0,$t1,$t2    
-
+	# find out which one is bigger
+	slt $t0, $a0,$a1
+	# if the second one is bigger we jump
+	beq $t0,$0, abs_diff_a1_smaller
+	# we know $a1 is bigger
+	sub $v0, $a1,$a0
+	# jump back to caller
+	jr $ra
+abs_diff_a1_smaller:
+	# now $a2 is bigger
+	sub $v0, $a0,$a1
+	# jump back to caller
 	jr $ra
 	
-recursive_sum:    
-	addi $sp, $sp, -8       # Adjust sp
-        addi $t0, $a1, -1       # Compute size - 1
-        sw   $t0, 0($sp)        # Save size - 1 to stack
-        sw   $ra, 4($sp)        # Save return address
-        bne  $a1, $zero, else   # size == 0 ?
-        addi  $v0, $0, 0        # If size == 0, set return value to 0
-        addi $sp, $sp, 8        # Adjust sp
-        jr $ra                  # Return
-
-else:     
-	add  $a1, $t0, $0		#update the second argument
-        jal   recursive_sum 
-        lw    $t0, 0($sp)       # Restore size - 1 from stack
-        sll  $t1, $t0, 2        # Multiply size by 4
-        add   $t1, $t1, $a0     # Compute & arr[ size - 1 ]
-        lw    $t2, 0($t1)       # t2 = arr[ size - 1 ]
-        add   $v0, $v0, $t2     # retval = $v0 + arr[size - 1]
-        lw    $ra, 4($sp)       # restore return address from stack         
-        addi $sp, $sp, 8        # Adjust sp
-        jr $ra                  # Return
-        
-# TODO2: Implement the abs_diff routine here, or use the one provided
+	
 
 
-# TODO3: Implement the recursive_sum routine here, or use the one provided
+# $a0 is the address of first array element
+# $a1 is the length of the array
+# $v0 is the sum of all the elements in the array
+recursive_sum:
+	# if the remaining length is zero, we return 
+	bne $a1, $0, recursive_sum_recursion
+	# return to caller
+	addi $v0, $zero,0
+	jr $ra
+recursive_sum_recursion:
+	# we have not returned, hence we can still sum
+	# we will first store the current $ra on the stack
+	# we will decrease stack pointer by 4 (since the stack pointer grows from top to bottom)
+	subi $sp, $sp , 4
+	# store the old return address on the stack
+	sw $ra, ($sp)
+	# now we can recursively call ourselves
+	subi $a1, $a1, 1
+	jal recursive_sum
+	# calculate the memory location
+	addi $a1, $a1, 1
+	sll $t1, $a1, 4
+	# add the content of the memory location to our sum
+	add $v0, $v0, $t0
+	# load the old return address from the stack again
+	lw $ra, ($sp)		
+	# increment stack pointer again
+	addi $sp, $sp, 4
+	# return 
+	jr $ra
+	
 
 
-
-end:	syscall
-	#j	end	# Infinite loop at the end of the program. 
-
+end:	# j end 
 
 
