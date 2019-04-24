@@ -29,11 +29,11 @@ main:
 	     sw      $t0, 16($s0) # left_image[4] is also 1	     
 	     addi   $t0, $0, 13  # left_image[5]	     
 	     sw      $t0, 20($s0)	     
-	     addi   $t0, $0, 2  # left_image[5]	     
+	     addi   $t0, $0, 2  # left_image[6]	     
 	     sw      $t0, 24($s0)	  	     
-	     addi   $t0, $0, 8  # left_image[6]	     
+	     addi   $t0, $0, 8  # left_image[7]	     
 	     sw      $t0, 28($s0)	  	     	     
-	     addi   $t0, $0, 10  # left_image[7]	     
+	     addi   $t0, $0, 10  # left_image[8]	     
 	     sw      $t0, 32($s0)	 	     	     	     	     
 
 	# we can increase the base register to load the next array:
@@ -51,11 +51,11 @@ main:
 	     sw      $t0, 16($s0)
 	     addi   $t0, $0, 12  # right_image[5]	     
 	     sw      $t0, 20($s0)	     
-	     addi   $t0, $0, 3  # right_image[5]	     
+	     addi   $t0, $0, 3  # right_image[6]	     
 	     sw      $t0, 24($s0)	  	     
-	     addi   $t0, $0, 7  # right_image[6]	     
+	     addi   $t0, $0, 7  # right_image[7]	     
 	     sw      $t0, 28($s0)	  	     	     
-	     addi   $t0, $0, 11  # right_image[7]	     
+	     addi   $t0, $0, 11  # right_image[8]	     
 	     sw      $t0, 32($s0)	 	     	     	     	     
 	
 	# we now set the base address for the disparity map:
