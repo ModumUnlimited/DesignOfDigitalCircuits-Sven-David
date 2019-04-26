@@ -49,7 +49,7 @@ module FSM_test;
    // Initialization
 	initial
 	begin
-        // we apply the reset signal and wait 10 ms.
+        // we apply the reset signal and wait 10 ns.
         reset = 1'b1; #10;
         // lift reset signal -> device should have reset
         reset = 1'b0; 

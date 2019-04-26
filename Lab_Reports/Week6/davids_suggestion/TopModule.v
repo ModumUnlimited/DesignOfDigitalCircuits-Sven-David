@@ -24,7 +24,8 @@ parameter STATE6 = 4'b1111;
 
 
 
-// this stores the current state
+// this stores the current state 
+// DO NOT REMOVE THE INITIALIZATION - IT IS VITAL.
 reg[3:0] currentState = 4'b0000;
 reg[3:0] nextState = 4'b0000;
 
@@ -38,7 +39,8 @@ always @(posedge reset or posedge clock)
 
 
 
-// determine next state: -> we always do this after we change the currentState
+// determine next state: (yes this line should ideally be always @(*), but we want to check every cycle of the fast clock to detect if the left or right button have been pressed and then update the state
+// this is more deterministic than always @(*) since this way we are independent of the "wobblyness" of a press on left or right and is how we have decided to implement it.
 always @(clk)
     begin
         case (currentState)
