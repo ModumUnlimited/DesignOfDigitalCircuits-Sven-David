@@ -19,8 +19,7 @@ loop:	add $t2, $t2, $t0
 	j loop
 	
 end:	
-	syscall
-	#j	end	# Infinite loop at the end of the program. 
+	j	end	# Infinite loop at the end of the program. 
 
 
 # alternative syscall instead of j end -> simulation will only work this way
