@@ -22,9 +22,9 @@ module MIPS(
              input CLK,                   // Clock signal
 			 input RESET,                 // Reset Active low will set back the Program counter
 		     output [31:0] IOWriteData,   // IO Data to be written to the interface
-			 output  [3:0] IOAddr,        // IO Address we use 4 bits, could also be more
+			 output [3:0] IOAddr,        // IO Address we use 4 bits, could also be more
 			 output        IOWriteEn,     // 1: There is a valid IO Write
-			 input  [31:0] IOReadData     // 32bit input from the I/O interface        
+			 input [31:0] IOReadData     // 32bit input from the I/O interface        
     );
 
    // The MIPS processor
@@ -83,21 +83,23 @@ module MIPS(
    ////////////////////////////////////
 	// The Program Counter
 	always @ ( posedge CLK, posedge RESET ) 
+	begin
 	  if    (RESET	  == 1'b1) PC <= 32'h00002FFC; // default program counter 
 	  else                    PC <= PCbar;        // Copy next value to present
+	end
 	
 	// Calculation of the next PC value
    assign PCPlus4  = PC + 4;                             // By default the PC increments by 4
    assign PCBranch = PCPlus4 + {SignImm[29:0],2'b00};    // The branch address see Page 373, Fig 7.10
-	assign PCCalc = PCSrc ? PCBranch : PCPlus4;           // Multiplexer selects Branch or only +4
+   assign PCCalc = PCSrc ? PCBranch : PCPlus4;           // Multiplexer selects Branch or only +4
    assign PCJump = {PCPlus4[31:28], Instr[25:0], 2'b00}; // The Jump value
-	assign PCbar  = Jump  ? PCJump   : PCCalc;            // Multiplexer selects Jump or Normal
+   assign PCbar  = Jump  ? PCJump   : PCCalc;            // Multiplexer selects Jump or Normal
 
    /////////////////////////////////////
    // Instantiate the Instruction Memory
 
 	  InstructionMemory i_imem (
-                                .A(PCbar[7:2]), // Address of the Instruction max 64 instructions
+                                .A(PC[7:2]), // Address of the Instruction max 64 instructions
                                 .RD(Instr)  // Value at Address
                               );
 										
