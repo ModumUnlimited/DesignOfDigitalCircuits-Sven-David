@@ -8,7 +8,7 @@
 
 .data
 pattern: .word 0x00200000,0x00004000,0x00000080,0x00000001,0x00000002,0x00000004,0x00000008,0x00000400,0x00020000,0x01000000,0x02000000,0x04000000
-loopcnt: .word 0x001e8484
+loopcnt: .word 1200000
 
 .text
    lw $t3, loopcnt    # initialize a  large loopcounter (so that the snake does not crawl SUPERFAST)
@@ -24,8 +24,10 @@ forward:
    
    addi $t4, $t4, 4 # increment to the next address
    addi $t2, $0, 0 # clear $t2 counter
+   lw $t6, 0x7ff4($0)
+   addi $t6, $t6, 1
 
 wait:
    beq $t2,$t3,forward	
-   addi  $t2, $t2, 1     # increment counter
+   add  $t2, $t2, $t6     # increment counter
    j wait

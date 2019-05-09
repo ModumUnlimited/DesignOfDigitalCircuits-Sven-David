@@ -81,7 +81,8 @@ clockdiv ClockDiv (
    // Create the 32 bit IOReadData based on IOAddr value. Remember IOAddr is a 4-bit
    // value.
     
-   assign IOReadData = (IOAddr == 1'h4)? {{30{1'b0}}, SPEEDSWITCHES}: 32'h0;
+   assign IOReadData = (IOAddr == 4'b0100)? {4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,2'b00,SPEEDSWITCHES}: 32'b0;
+   //assign IOReadData = {{30{1'b0}}, SPEEDSWITCHES};
 
 // Register to save the 28-bit Value
   always @ (posedge CLK, posedge RESET)
