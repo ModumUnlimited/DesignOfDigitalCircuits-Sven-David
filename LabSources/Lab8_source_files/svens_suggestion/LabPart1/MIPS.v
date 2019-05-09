@@ -2,21 +2,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: ETH Zurich
 // Engineer: Frank K. Gurkaynak
-// 
-// Create Date:    18:20:55 03/21/2011 
-// Design Name: 
-// Module Name:    MIPS 
-// Project Name:   Lab 8
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
 //////////////////////////////////////////////////////////////////////////////////
 module MIPS(
              input CLK,                   // Clock signal
@@ -95,10 +80,10 @@ module MIPS(
 
    /////////////////////////////////////
    // Instantiate the Instruction Memory
-	  InstructionMemory i_imem (.A(PCbar[7:2]), .RD(Instr[25:21]));
+	  InstructionMemory i_imem (.A(PC[7:2]), .RD(Instr));
 										
    // Sign extension, replicate the MSB of the Immediate value 
-	assign SignImm = {{16{Instr[15]}},Instr};
+	assign SignImm = {{16{Instr[15]}},Instr[15:0]};
 
    // Determine the Write Back address for the Register File
 	assign WriteReg = RegDst ? Instr[15:11] : Instr[20:16];
@@ -128,17 +113,16 @@ module MIPS(
    
    ////////////////////////////////////
 	// Instantiate the Data Memory
-	// TODO: Check whether MemWrite really is the Write Enable signal (seems strange)
-	  DataMemory i_dmem (.CLK(CLK), .A(ALUResult[7:2]), .WE(MemWrite), .WD(WriteData), .RD(ReadData));
+	  DataMemory i_dmem (.CLK(CLK), .A(ALUResult[7:2]), .WE(IsMemWrite), .WD(WriteData), .RD(ReadData));
 
    // Memory Mapped I/O
    assign IsIO = (ALUResult[31:4] == 28'h00007ff) ? 1 : 0; // 1: when datamemory address
 	                                                  // falls into I/O  address range
-   // TODO Part 1
-   assign IsMemWrite  =                // Is 1 when there is a SW instruction on DataMem address
-   assign IOWriteData =                // This line is connected directly to WriteData
-   assign IOAddr      =                // The LSB 4 bits of the Address is assigned to IOAddr
-   assign IOWriteEn   =                // Is 1 when there is a SW instruction on IO address 
+
+   assign IsMemWrite  = MemWrite & ~IsIO;// Is 1 when there is a SW instruction on DataMem address
+   assign IOWriteData = WriteData; // This line is connected directly to WriteData
+   assign IOAddr      = ALUResult[3:0]; // The LSB 4 bits of the Address is assigned to IOAddr
+   assign IOWriteEn   = MemWrite & IsIO; // Is 1 when there is a SW instruction on IO address 
    
 
    assign ReadMemIO   = IsIO ? IOReadData : ReadData;   // Mux selects memory or I/O	
