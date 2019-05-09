@@ -146,7 +146,7 @@ end_loop:
 	
 	# Prepare the second argument of the function call: the size of the array
 	
-	addi $a1, $0, 9
+	addi $a1, $0, 3
 	
 	# Call to funtion
 	
@@ -252,5 +252,4 @@ else:
 
 
 end:	# j end 
-
 
