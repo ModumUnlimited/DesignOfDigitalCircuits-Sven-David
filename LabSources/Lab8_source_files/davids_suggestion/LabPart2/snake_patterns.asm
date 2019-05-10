@@ -8,13 +8,10 @@
 
 .data
 pattern: .word 0x00200000,0x00004000,0x00000080,0x00000001,0x00000002,0x00000004,0x00000008,0x00000400,0x00020000,0x01000000,0x02000000,0x04000000
-loopcntSlow: .word 0x000F4242
-loopcntNorm: .word 0x001e8484
-loopcntFast: .word 0x003D0908
-loopcntLight: .word 0x007A1210
+loopcnt:  .word 0x001e8484
 
 .text
-   lw $t3, loopcntNorm    # initialize a  large loopcounter (so that the snake does not crawl SUPERFAST)
+   lw $t3, loopcnt    # initialize a  large loopcounter (so that the snake does not crawl SUPERFAST)
    addi $t5,$0,48       # initialize the length of the display pattern (in bytes)
 
 
@@ -28,13 +25,14 @@ forward:
    
    addi $t4, $t4, 4 # increment to the next address
    addi $t2, $0, 0 # clear $t2 counter
-   lw $s0, 0x7ff4($0)
-   addi $s0, $s0, 1
-   addi $t2, $t2, $s0     # increment counter
+   lw $s0, 0x7ff4($0) # load the users speed value
+   addi $s0, $s0, 1 # add one to the speed
    j wait
 
 
 wait:
-   beq $t2,$t3,forward
+   beq $t2,$t3,forward   # Move snake if counter at loopcnt
+   add  $t2, $t2, $s0    # increment counter based on speed selected by the user
+   j wait                # Repeat
 
-   -> put this crap into forward
+
