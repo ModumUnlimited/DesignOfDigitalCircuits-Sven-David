@@ -1,0 +1,1 @@
+When you compile this project you will see the word cool gradually appear on your FPGA. A GIF will be supplied within the next couple of hours.
