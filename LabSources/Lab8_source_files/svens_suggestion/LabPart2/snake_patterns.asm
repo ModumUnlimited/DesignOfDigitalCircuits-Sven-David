@@ -11,23 +11,23 @@ pattern: .word 0x00200000,0x00004000,0x00000080,0x00000001,0x00000002,0x00000004
 loopcnt: .word 1200000
 
 .text
-   lw $t3, loopcnt    # initialize a  large loopcounter (so that the snake does not crawl SUPERFAST)
-   addi $t5,$0,48       # initialize the length of the display pattern (in bytes)
+   lw $t3, loopcnt       # initialize a  large loopcounter (so that the snake does not crawl SUPERFAST)
+   addi $t5,$0,48        # initialize the length of the display pattern (in bytes)
    
-restart:   
-   addi $t4,$0,0
+restart:                 
+   addi $t4,$0,0         #Sets $t4 back to 0
 
 forward:
-   beq $t5,$t4, restart
-   lw $t0,0($t4)
-   sw  $t0, 0x7ff0($0) # send the value to the display
+   beq $t5,$t4, restart  # Restart if $t5 equals $t4
+   lw $t0,0($t4)         # Load value
+   sw  $t0, 0x7ff0($0)   # send value to the display
    
-   addi $t4, $t4, 4 # increment to the next address
-   addi $t2, $0, 0 # clear $t2 counter
-   lw $t6, 0x7ff4($0)
-   addi $t6, $t6, 1
+   addi $t4, $t4, 4      # increment to the next address
+   addi $t2, $0, 0       # clear $t2 counter
+   lw $t6, 0x7ff4($0)    # Load 'speed value' from IO
+   addi $t6, $t6, 1      # Increment $t6
 
 wait:
-   beq $t2,$t3,forward	
-   add  $t2, $t2, $t6     # increment counter
-   j wait
+   beq $t2,$t3,forward   # Move snake if counter at loopcnt
+   add  $t2, $t2, $t6    # increment counter based on $t6 value
+   j wait                # Repeat
