@@ -1,1 +1,3 @@
-When you compile this project you will see the word cool gradually appear on your FPGA. A GIF will be supplied within the next couple of hours.
+A fully functional single cycle 10MHZ processor and a MIPS assembly program writing the word cool to the display.
+
+![cool.gif](cool.gif)
