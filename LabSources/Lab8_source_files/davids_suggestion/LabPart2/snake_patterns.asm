@@ -16,10 +16,6 @@ loopcntLight: .word 0x007A1210
 .text
    lw $t3, loopcntNorm    # initialize a  large loopcounter (so that the snake does not crawl SUPERFAST)
    addi $t5,$0,48       # initialize the length of the display pattern (in bytes)
-   addi $s0,$0,0x00000001 # normal
-   addi $s1,$0,0x00000000 # slow
-   addi $s2,$0,0x00000010 # fast
-   addi $s3,$0,0x00000011 # light
 
 
 restart:   
@@ -32,28 +28,13 @@ forward:
    
    addi $t4, $t4, 4 # increment to the next address
    addi $t2, $0, 0 # clear $t2 counter
+   lw $s0, 0x7ff4($0)
+   addi $s0, $s0, 1
+   addi $t2, $t2, $s0     # increment counter
+   j wait
+
 
 wait:
    beq $t2,$t3,forward
-   addi  $t2, $t2, 1     # increment counter
-   j findSpeed
 
-findSpeed:
-   lw $t1, 0x7ff4($0) # load the speed from the memory
-   beq $t1, $s1, slow # check if speed is slow
-   beq $t1, $s2, fast # check if speed is fast
-   beq $t1, $s3, light # check if speed is as fast as light
-   add $t3, $0, $s0 # hence we are normal speed 
-   j wait
-
-slow: 
-   lw $t3, loopcntSlow # load slow speed
-   j wait
-
-fast: 
-   lw $t3, loopcntFast # load fast speed
-   j wait
-
-light: 
-   lw $t3, loopcntLight # load light speed
-   j wait
+   -> put this crap into forward

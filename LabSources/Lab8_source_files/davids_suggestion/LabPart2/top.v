@@ -86,7 +86,8 @@ assign LED = ~DispDigit;
 
 // if the address is a match we will store the value else we will send a zero
 // we have 16 different addresses that we can match, we must look for a 4
-assign IOReadData = (IOAddr == 4'b0100)? {4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,2'b00,IN}: 32'b0;
+//assign IOReadData = {4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,2'b00,IN};
+assign IOReadData = (IOAddr == 4'b0100)? {30'b0,IN}: 32'b0;
 
 
 // Register to save the 28-bit Value
@@ -98,11 +99,11 @@ assign IOReadData = (IOAddr == 4'b0100)? {4'b0000,4'b0000,4'b0000,4'b0000,4'b000
 
 // Instantiate the processor
 MIPS processor (
-    .CLK(CLK), 
-    .RESET(RESET), 
+    .CLK(CLK),
+    .RESET(RESET),
     .IOWriteData(IOWriteData), 
-    .IOAddr(IOAddr), 
-    .IOWriteEn(IOWriteEn), 
+    .IOAddr(IOAddr),
+    .IOWriteEn(IOWriteEn),
     .IOReadData(IOReadData)
     );
 
