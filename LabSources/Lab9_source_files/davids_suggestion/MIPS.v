@@ -46,13 +46,13 @@ module MIPS(
   wire [31:0] PCJump;    // Value for immediate jump
   wire [31:0] PCBranch;  // Value calculated for the branch instructions
   wire [31:0] PCPlus4;   // The current value of PC + 4, default next memory address
-
+   
   // ALU related
   wire [31:0] SrcA;      // One input of the ALU
   wire [31:0] SrcB;      // Other input of the ALU
   wire [31:0] ALUResult; // The output of the ALU
   wire        Zero;      // The Zero flag, 1: if ALUResult == 0 
-
+  wire [4:0] shamt;
   // Data Memory
   wire [31:0] WriteData; // The output of Register File port 2,
   wire [31:0] ReadData;  // Output of the Data Memory
@@ -116,6 +116,7 @@ module MIPS(
   ////////////////////////////////////
   // ALU: first determine the inputs, and then instantiate the ALU
   assign SrcB = ALUSrc ? SignImm : WriteData ; // ALU input is either immediate or from register
+  assign shamt = Instr[10:6];
 
   ////////////////////////////////////
   // TO DO:
@@ -123,9 +124,12 @@ module MIPS(
   ALU i_alu (
     .a(SrcA),               // First ALU input, direct from register file
     .b(SrcB),               // Second ALU input, from the multiplexer
-    .aluop(ALUControl[3:0]),// ALU operation, at the moment only last 4 bits
+    .aluop(ALUControl),// ALU operation, at the moment only last 4 bits
     .result(ALUResult),     // 32-bit output
-    .zero(Zero)             // The Zero flag
+    .zero(Zero),             // The Zero flag
+    .reset(RESET),
+    .clock(CLK),
+    .shamt(shamt)
    );
 
 

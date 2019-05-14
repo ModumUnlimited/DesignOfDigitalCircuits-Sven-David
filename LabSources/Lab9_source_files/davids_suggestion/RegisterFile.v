@@ -57,6 +57,6 @@ module RegisterFile(
 	  // Otherwise read the output from the register file 
 
      assign RD1 = (A1 != 4'b0000) ? Read1 : 0; // Port 1
-	 assign RD2 = (A2 != 4'b0000) ? Read2 : 0; // Port 2
+	  assign RD2 = (A2 != 4'b0000) ? Read2 : 0; // Port 2
 
 endmodule
