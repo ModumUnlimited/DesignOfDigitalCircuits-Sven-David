@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Webtalk v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Fri May 17 00:10:13 2019
+# Process ID: 17884
+# Current directory: C:/Users/Sven Pfiffner/Desktop/lab9_student/lab_9.sim/sim_1/behav/xsim
+# Command line: wbtcv.exe -mode batch -source C:/Users/Sven Pfiffner/Desktop/lab9_student/lab_9.sim/sim_1/behav/xsim/xsim.dir/MIPS_test_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: C:/Users/Sven Pfiffner/Desktop/lab9_student/lab_9.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: C:/Users/Sven Pfiffner/Desktop/lab9_student/lab_9.sim/sim_1/behav/xsim\webtalk.jou
+#-----------------------------------------------------------
+source C:/Users/Sven -notrace
+couldn't read file "C:/Users/Sven": no such file or directory
+INFO: [Common 17-206] Exiting Webtalk at Fri May 17 00:10:13 2019...
