@@ -94,6 +94,12 @@ assign LED = ~DispDigit;
 
 assign directionWire = DIRECTION==1'b1 ? 32'h0004: 32'hFFFC;
 
+
+
+
+// FOR THE TA: We have added a third signal called directionwire to solve the challenge; we have not drawn in onto the schematic of exercise 1 since it wasn't part of what we had to do in class, but one could very simply add this to the schematics.
+
+
 always @ (*)
     begin
         case(IOAddr)
