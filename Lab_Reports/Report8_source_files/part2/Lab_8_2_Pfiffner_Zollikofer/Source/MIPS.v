@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: ETH Zurich
-// Engineer: Frank K. Gurkaynak
+// Engineer: Frank K. Gurkaynak  -> adapted by Sven Pfiffner and David Zollikofer
 // 
 // Create Date:    18:20:55 03/21/2011 
-// Design Name: 
+// Design Name:    
 // Module Name:    MIPS 
 // Project Name:   Lab 8
 // Target Devices: 
@@ -163,7 +163,6 @@ module MIPS(
    // Memory Mapped I/O
    assign IsIO = (ALUResult[31:4] == 28'h00007ff) ? 1 : 0; // 1: when datamemory address
 	                                                  // falls into I/O  address range
-   // TODO Part 1
    // we will only write to memory if we are not writing to the IO
    assign IsMemWrite  =  MemWrite & ~IsIO;         // Is 1 when there is a SW instruction on DataMem address
    // we want to write the same data

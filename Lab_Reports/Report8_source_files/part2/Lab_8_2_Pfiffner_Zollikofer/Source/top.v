@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company:  ETHZ
+// Engineer:  Sven Pfiffner & David Zollikofer
 // 
 // Create Date:    16:23:20 05/18/2011 
 // Design Name: 
@@ -82,15 +82,13 @@ clockdiv ClockDiv (
 assign LED = ~DispDigit;
 
 
-// TODO for Part II of Lab 8
 // The speed of the snake must be read as input and sent to the MIPS processor.
 // Create the 32 bit IOReadData based on IOAddr value. Remember IOAddr is a 4-bit
 // value.
 
 // if the address is a match we will store the value else we will send a zero
 // we have 16 different addresses that we can match, we must look for a 4
-//assign IOReadData = {4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,4'b0000,2'b00,IN};
-//assign IOReadData = (IOAddr == 4'b0100)? {30'b0,IN}: 32'b0;
+
 
 assign directionWire = DIRECTION==1'b1 ? 32'h0004: 32'hFFFC;
 
